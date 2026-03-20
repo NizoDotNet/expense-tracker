@@ -2,6 +2,11 @@
   <div class="flex flex-col gap-2">
     <p class="text-primary-grey text-xs">{{ topText() }}</p>
     <p class="text-[28px] font-bold"><span>&#8380;</span>{{ balance() }}</p>
-    <p class="text-xs" [class]="bottomTextColor()">{{ bottomText() }}</p>
+    <p class="text-xs flex items-center" [class]="isGrowth() ? 'text-green-400' : 'text-red-500'">
+      {{ bottomText() }}
+      <span class="ms-2">
+        <img [src]="isGrowth() ? 'imgs/growth.svg' : 'imgs/loss.svg'" class="my-auto mx-auto" />
+      </span>
+    </p>
   </div>
 </div>

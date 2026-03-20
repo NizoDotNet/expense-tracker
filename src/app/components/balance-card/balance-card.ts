@@ -10,5 +10,5 @@ export class BalanceCard {
   topText = input<string>('');
   balance = input<number>(0.0);
   bottomText = input<string>('');
-  bottomTextColor = input<string>('text-green-400');
+  isGrowth = input<boolean>(true);
 }
