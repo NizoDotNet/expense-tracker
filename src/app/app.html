@@ -1,14 +1,14 @@
 <div class="min-h-screen lg:px-[120px] md:px-20 sm:px-10 px-5 mx-auto">
   <div class="flex flex-col">
     <header class="py-3">
-      <nav class="flex justify-between">
+      <nav class="flex justify-between items-center">
         <div>
-          <a class="font-bold text-3xl">Logo</a>
+          <a class="font-bold text-3xl text-primary-green">Logo</a>
         </div>
         <div class="flex lg:gap-7 md:gap-5 sm:gap-2">
-          <app-link text="Dashboard" />
-          <app-link text="Transactions" />
-          <app-link text="Reports" />
+          <app-link text="Dashboard" linkTo="/dashboard" />
+          <app-link text="Transactions" linkTo="/" />
+          <app-link text="Reports" linkTo="/" />
         </div>
         <div></div>
       </nav>
