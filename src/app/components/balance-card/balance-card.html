@@ -1,1 +1,7 @@
-<p>balance-card works!</p>
+<div class="bg-white rounded-xl w-[260px] h-[125px] p-4">
+  <div class="flex flex-col gap-2">
+    <p class="text-primary-grey text-xs">{{ topText() }}</p>
+    <p class="text-[28px] font-bold"><span>&#8380;</span>{{ balance() }}</p>
+    <p class="text-xs" [class]="bottomTextColor()">{{ bottomText() }}</p>
+  </div>
+</div>
