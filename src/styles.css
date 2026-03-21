@@ -6,3 +6,14 @@
   --color-primary-green: #00b894;
   --color-primary-grey: #64748b;
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

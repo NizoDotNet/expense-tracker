@@ -1,0 +1,10 @@
+<div class="balance-cards flex lg:gap-6 md:gap-4 gap-2 overflow-x-auto px-3 pb-3 no-scrollbar">
+  @for (card of cards(); track $index) {
+    <app-balance-card
+      [topText]="card.topText"
+      [balance]="card.balance"
+      [bottomText]="card.bottomText"
+      [isGrowth]="card.isGrowth"
+    ></app-balance-card>
+  }
+</div>
