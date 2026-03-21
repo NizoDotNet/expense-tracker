@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { BalanceCard } from '../../components/balance-card/balance-card';
 import { Card, Cards } from './components/cards/cards';
+import { SpendingOverview } from './components/spending-overview/spending-overview';
 @Component({
   selector: 'app-dashboard',
-  imports: [Cards],
+  imports: [Cards, SpendingOverview],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
