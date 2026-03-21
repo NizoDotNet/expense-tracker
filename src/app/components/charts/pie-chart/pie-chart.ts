@@ -13,9 +13,9 @@ export class PieChart implements OnInit {
   public pieChartOptions: ChartConfiguration['options'] = {
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'right',
-
+        fullSize: true,
         labels: {
           boxWidth: 10,
           boxHeight: 10,
@@ -23,6 +23,7 @@ export class PieChart implements OnInit {
         },
       },
     },
+    layout: {},
     responsive: false,
     maintainAspectRatio: false,
   };
@@ -36,6 +37,15 @@ export class PieChart implements OnInit {
         },
       ],
     };
+  }
+
+  getLegendItems() {
+    const dataset = this.pieChartData!.datasets[0];
+    return this.pieChartData!.labels?.map((label, i) => ({
+      label,
+      color: (dataset.backgroundColor as string[])[i],
+      value: dataset.data[i],
+    }));
   }
 }
 

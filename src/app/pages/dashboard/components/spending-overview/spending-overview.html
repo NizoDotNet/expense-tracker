@@ -6,14 +6,21 @@
       <option>1</option>
     </select>
   </div>
-  <div class="p-[15px] flex lg:flex-row flex-col lg:justify-between">
-    <app-line-chart></app-line-chart>
-    <app-pie-chart
-      [expensesData]="[
-        { category: 'Food', expense: 200 },
-        { category: 'Food', expense: 200 },
-        { category: 'd', expense: 500 },
-      ]"
-    ></app-pie-chart>
+  <div
+    class="w-full p-[15px] flex lg:flex-row flex-col lg:justify-between justify-center gap-3 lg:gap-2"
+  >
+    <div class="flex-1">
+      <app-line-chart class="flex justify-center"></app-line-chart>
+    </div>
+    <div class="flex-1">
+      <app-pie-chart
+        class="flex justify-center"
+        [expensesData]="[
+          { category: 'Food', expense: 200 },
+          { category: 'Food', expense: 200 },
+          { category: 'd', expense: 500 },
+        ]"
+      ></app-pie-chart>
+    </div>
   </div>
 </div>
