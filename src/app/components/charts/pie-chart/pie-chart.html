@@ -1,0 +1,15 @@
+<div class="w-[520px] h-[300px] bg-white rounded-xl p-6">
+  <div class="w-full flex flex-col gap-4">
+    <div class="flex flex-col gap-[6px]">
+      <h1 class="text-primary-title text-xl">Expense Breakdown</h1>
+      <span class="text-sm text-primary-grey">This month spending by category</span>
+    </div>
+    <canvas
+      class="w-full"
+      baseChart
+      type="pie"
+      [data]="pieChartData"
+      [options]="pieChartOptions"
+    ></canvas>
+  </div>
+</div>

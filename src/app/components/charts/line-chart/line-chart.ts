@@ -11,6 +11,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class LineChart {
   incomeData = input<any[]>([10, 20, 30, 20, 2, 12, 30]);
   expenseData = input<any[]>([4, 12, 32]);
+  labels = input<string[]>(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']);
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -26,7 +27,7 @@ export class LineChart {
         tension: 0.4,
       },
     ],
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    labels: this.labels(),
   };
 
   lineChartOptions: ChartConfiguration['options'] = {

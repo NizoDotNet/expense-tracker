@@ -5,6 +5,7 @@
 @theme {
   --color-primary-green: #00b894;
   --color-primary-grey: #64748b;
+  --color-primary-title: #1e293b;
 }
 
 @layer utilities {

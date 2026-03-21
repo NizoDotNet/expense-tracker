@@ -7,8 +7,13 @@
     </select>
   </div>
   <div class="p-[15px] flex lg:flex-row flex-col lg:justify-between">
-    <div class="line-chart">
-      <app-line-chart></app-line-chart>
-    </div>
+    <app-line-chart></app-line-chart>
+    <app-pie-chart
+      [expensesData]="[
+        { category: 'Food', expense: 200 },
+        { category: 'Food', expense: 200 },
+        { category: 'd', expense: 500 },
+      ]"
+    ></app-pie-chart>
   </div>
 </div>
