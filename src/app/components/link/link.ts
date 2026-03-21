@@ -1,16 +1,10 @@
 import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-link',
-  imports: [RouterLink],
-  template: `
-    <a
-      [routerLink]="linkTo()"
-      class="text-primary-grey active:text-primary-green active:underline underline-offset-3 cursor-pointer select-none hover:text-primary-green"
-      >{{ text() }}</a
-    >
-  `,
+  imports: [RouterLink, RouterLinkActive],
+  templateUrl: 'link.html',
 })
 export class Link {
   text = input.required<string>();
