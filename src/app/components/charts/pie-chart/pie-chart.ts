@@ -24,7 +24,7 @@ export class PieChart implements OnInit {
       },
     },
     layout: {},
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: false,
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> | undefined = undefined;
