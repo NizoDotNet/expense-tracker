@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 
 export interface UserResponse {
   id: string;
@@ -19,23 +20,48 @@ export interface LoginUserRequest {
   providedIn: 'root',
 })
 export class AuthService {
-  private user: UserResponse | null = null;
+  private user = signal<UserResponse | null>(null);
+  isLoading = signal(false);
   private readonly baseUrl = '/auth';
   http = inject(HttpClient);
 
-  loginUser(request: LoginUserRequest) {
-    let errors: any;
-    this.http.post(`${this.baseUrl}/login`, request).subscribe({
-      next: (value) => {
-        console.log(value);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  login(login: LoginUserRequest) {
+    this.isLoading.set(true);
+    return this.http
+      .post(`${this.baseUrl}/login`, login, {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap(() => this.getUser()),
+        tap((user) => {
+          this.user.set(user);
+          this.isLoading.set(false);
+        }),
+        catchError((error) => {
+          this.user.set(null);
+          this.isLoading.set(false);
+
+          if (error.status === 401) {
+            return throwError(() => new Error('Invalid credentials'));
+          }
+
+          return throwError(() => error);
+        }),
+      );
   }
 
-  getUserState(): UserResponse | null {
-    return this.user;
+  getUser(): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.baseUrl}/user`);
+  }
+
+  getUserState() {
+    if (this.user() === null) {
+      this.getUser().subscribe({
+        next: (data) => {
+          this.user.set(data);
+        },
+      });
+    }
+    return this.user();
   }
 }
