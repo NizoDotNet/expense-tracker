@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
-
+import { Router } from '@angular/router';
 export interface UserResponse {
   id: string;
   email: string;
@@ -24,6 +24,7 @@ export class AuthService {
   isLoading = signal(false);
   private readonly baseUrl = '/api/auth';
   http = inject(HttpClient);
+  router = inject(Router);
 
   login(login: LoginUserRequest) {
     this.isLoading.set(true);
@@ -60,6 +61,7 @@ export class AuthService {
         next: (data) => {
           this.user.set(data);
         },
+        error: (error) => this.router.navigate(['/auth/login']),
       });
     }
     return this.user();

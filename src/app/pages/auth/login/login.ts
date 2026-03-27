@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,23 @@ import { AuthService } from '../../../services/auth-service';
 export class Login {
   errorMessage = '';
   isSubmitting = false;
+  showPassword = false;
 
   fb = inject(FormBuilder);
+  router = inject(Router);
   authService = inject(AuthService);
   form = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
+  email() {
+    return this.form.get('email');
+  }
+
+  password() {
+    return this.form.get('password');
+  }
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -38,7 +48,7 @@ export class Login {
       .subscribe({
         next: () => {
           this.isSubmitting = false;
-          console.log('Logged in');
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.isSubmitting = false;

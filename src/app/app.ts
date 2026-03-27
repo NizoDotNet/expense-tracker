@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Link } from './components/link/link';
+import { AuthService } from './services/auth-service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Link],
@@ -9,4 +10,5 @@ import { Link } from './components/link/link';
 })
 export class App {
   protected readonly title = signal('expense-tracker');
+  readonly authService = inject(AuthService);
 }
