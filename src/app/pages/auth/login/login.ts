@@ -52,7 +52,7 @@ export class Login {
         },
         error: (err) => {
           this.isSubmitting = false;
-          this.errorMessage = err.message;
+          this.errorMessage = 'Email or password is incorrect';
         },
       });
   }
