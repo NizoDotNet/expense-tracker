@@ -16,6 +16,12 @@ export interface LoginUserRequest {
   email: string;
   password: string;
 }
+
+export interface RegisterUserRequest {
+  email: string;
+  password: string;
+  username: string | null;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -51,19 +57,33 @@ export class AuthService {
       );
   }
 
+  register(register: RegisterUserRequest) {
+    this.isLoading.set(true);
+    return this.http
+      .post(`${this.baseUrl}/register`, register, {
+        withCredentials: true,
+      })
+      .pipe(
+        catchError((error) => {
+          this.isLoading.set(false);
+          return throwError(() => new Error());
+        }),
+      );
+  }
+
   getUser(): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${this.baseUrl}/user`);
   }
 
   getUserState() {
-    if (this.user() === null) {
-      this.getUser().subscribe({
-        next: (data) => {
-          this.user.set(data);
-        },
-        error: (error) => this.router.navigate(['/auth/login']),
-      });
-    }
+    // if (this.user() === null) {
+    //   this.getUser().subscribe({
+    //     next: (data) => {
+    //       this.user.set(data);
+    //     },
+    //     error: (error) => this.router.navigate(['/auth/login']),
+    //   });
+    // }
     return this.user();
   }
 }

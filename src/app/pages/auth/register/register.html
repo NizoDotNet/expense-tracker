@@ -1,0 +1,67 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="bg-white w-[400px] rounded-2xl shadow-md p-8 flex flex-col items-center gap-5"
+  >
+    <h1 class="text-3xl font-bold text-gray-800">Sign in</h1>
+
+    <div class="w-full flex flex-col gap-1">
+      <div class="relative">
+        <input
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+          class="w-full form-input pl-10"
+        />
+      </div>
+
+      @if (email?.touched && email?.invalid) {
+        <span class="text-red-500 text-sm">Email is invalid</span>
+      }
+    </div>
+    <div class="w-full flex flex-col gap-1">
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="User name"
+          formControlName="username"
+          class="w-full form-input pl-10"
+        />
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="w-full flex flex-col gap-1">
+      <div class="relative">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          formControlName="password"
+          class="w-full form-input pl-10 pr-10"
+        />
+
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"> </span>
+
+        <span
+          class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
+          (click)="showPassword = !showPassword"
+        >
+          👁️
+        </span>
+      </div>
+
+      @if (password?.touched && password?.invalid) {
+        <span class="text-red-500 text-sm"> Password must contain at least 6 characters </span>
+      }
+    </div>
+    <span class="text-red-500 text-sm"> {{ errorMessage() }} </span>
+
+    <button
+      type="submit"
+      class="w-[180px] h-11 rounded-lg bg-primary-green text-white font-semibold hover:opacity-90"
+    >
+      SIGN IN
+    </button>
+  </form>
+</div>
