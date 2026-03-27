@@ -1,5 +1,5 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Link } from './components/link/link';
 import { AuthService } from './services/auth-service';
 @Component({
@@ -8,7 +8,15 @@ import { AuthService } from './services/auth-service';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit {
+  ngOnInit(): void {
+    this.authService.getUser().subscribe({
+      error: () => {
+        this.router.navigate(['auth/login']);
+      },
+    });
+  }
   protected readonly title = signal('expense-tracker');
   readonly authService = inject(AuthService);
+  readonly router = inject(Router);
 }

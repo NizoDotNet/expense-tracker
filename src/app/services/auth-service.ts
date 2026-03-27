@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   getUser(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${this.baseUrl}/user`);
+    return this.http.get<UserResponse>(`${this.baseUrl}/user`).pipe(tap((c) => this.user.set(c)));
   }
 
   getUserState() {
