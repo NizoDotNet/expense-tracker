@@ -22,7 +22,7 @@ export interface LoginUserRequest {
 export class AuthService {
   private user = signal<UserResponse | null>(null);
   isLoading = signal(false);
-  private readonly baseUrl = '/auth';
+  private readonly baseUrl = '/api/auth';
   http = inject(HttpClient);
 
   login(login: LoginUserRequest) {

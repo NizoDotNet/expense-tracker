@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -15,8 +15,8 @@ export class Login {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
   form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
   submit() {
