@@ -11,8 +11,10 @@ import { AuthService } from './services/auth-service';
 export class App implements OnInit {
   ngOnInit(): void {
     this.authService.getUser().subscribe({
-      error: () => {
-        this.router.navigate(['auth/login']);
+      error: (err) => {
+        if (err.status === 401 || err.status === 403) {
+          this.router.navigate(['auth/login']);
+        }
       },
     });
   }
