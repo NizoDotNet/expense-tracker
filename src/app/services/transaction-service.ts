@@ -42,6 +42,12 @@ export interface TransactionIncomeExpenseResponse {
   };
 }
 
+export interface PagedResult<T> {
+  page: number;
+  pageSize: number;
+  total: number;
+  values: T[];
+}
 export interface UserBalanceCalculatedStats {
   balance: number;
   balanceChange: number;
@@ -60,7 +66,7 @@ export class TransactionService {
   readonly baseUrl = '/api/transactions';
 
   getAllTransactions(page: number, pageNumber: number) {
-    return this.http.get<TransactionResponse[]>(`${this.baseUrl}`, {
+    return this.http.get<PagedResult<TransactionResponse>>(`${this.baseUrl}`, {
       withCredentials: true,
       params: {
         page,
