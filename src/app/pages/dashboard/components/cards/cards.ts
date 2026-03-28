@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { BalanceCard } from '../../../../components/balance-card/balance-card';
-import { NgForOf } from '../../../../../../node_modules/@angular/common/types/_common_module-chunk';
 @Component({
   selector: 'app-cards',
   imports: [BalanceCard],
@@ -16,4 +15,5 @@ export interface Card {
   balance: number;
   bottomText: string;
   isGrowth: boolean;
+  sign?: string | null;
 }

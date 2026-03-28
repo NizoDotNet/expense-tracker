@@ -11,4 +11,6 @@ export class BalanceCard {
   balance = input<number>(0.0);
   bottomText = input<string>('');
   isGrowth = input<boolean>(true);
+
+  sign = input<string>('₼');
 }

@@ -111,18 +111,15 @@ export class TransactionService {
   }
 
   getUserBalanceStats() {
-    if (this.balanceStats() === null) {
-      this.http
-        .get<UserBalanceCalculatedStats>(`${this.baseUrl}/calculated-balance`, {
-          withCredentials: true,
-        })
-        .subscribe({
-          next: (value) => {
-            this.balanceStats.set(value);
-          },
-        });
-    }
-    return this.balanceStats();
+    return this.http
+      .get<UserBalanceCalculatedStats>(`${this.baseUrl}/calculated-balance`, {
+        withCredentials: true,
+      })
+      .pipe(
+        tap((c) => {
+          this.balanceStats.set(c);
+        }),
+      );
   }
 
   createTransaction(createTransactionRequest: CreateTransactionRequest) {
