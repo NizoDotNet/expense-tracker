@@ -36,10 +36,10 @@ export interface TransactionIncomeExpenseResponse {
   labels: string[];
   income: {
     amount: number;
-  };
+  }[];
   expense: {
     amount: number;
-  };
+  }[];
 }
 
 export interface PagedResult<T> {

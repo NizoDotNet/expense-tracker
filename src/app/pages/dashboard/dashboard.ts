@@ -1,7 +1,13 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { Card, Cards } from './components/cards/cards';
 import { SpendingOverview } from './components/spending-overview/spending-overview';
-import { TransactionService, UserBalanceCalculatedStats } from '../../services/transaction-service';
+import {
+  TimePeriod,
+  TransactionExpenseByCategoryResponse,
+  TransactionIncomeExpenseResponse,
+  TransactionService,
+  UserBalanceCalculatedStats,
+} from '../../services/transaction-service';
 @Component({
   selector: 'app-dashboard',
   imports: [Cards, SpendingOverview],
@@ -11,7 +17,34 @@ import { TransactionService, UserBalanceCalculatedStats } from '../../services/t
 export class Dashboard implements OnInit {
   readonly transactionService = inject(TransactionService);
   cards = signal<Card[]>([]);
+  incomeExpense = signal<TransactionIncomeExpenseResponse | null>(null);
+  byCategory = signal<TransactionExpenseByCategoryResponse[] | null>(null);
+  timePeriod = signal<TimePeriod>(TimePeriod.month);
+  date = signal<string>(new Date().toUTCString());
+
   ngOnInit(): void {
+    this.getBalanceStats();
+    this.getIncomeExpense();
+    this.getExpensesByCategory();
+  }
+
+  private getExpensesByCategory() {
+    this.transactionService.getByCategory(this.timePeriod(), this.date()).subscribe({
+      next: (value) => {
+        this.byCategory.set(value);
+      },
+    });
+  }
+
+  private getIncomeExpense() {
+    this.transactionService.getIncomeExpense(this.timePeriod(), this.date()).subscribe({
+      next: (value) => {
+        this.incomeExpense.set(value);
+      },
+    });
+  }
+
+  private getBalanceStats() {
     this.transactionService.getUserBalanceStats().subscribe({
       next: (userBalance) => {
         console.log(userBalance);

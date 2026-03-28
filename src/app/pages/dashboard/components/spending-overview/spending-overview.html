@@ -10,16 +10,20 @@
     class="w-full p-[15px] flex xl:flex-row flex-col lg:justify-between justify-center gap-3 lg:gap-2"
   >
     <div class="flex-1">
-      <app-line-chart class="flex justify-center"></app-line-chart>
+      <app-line-chart
+        [expenseData]="incomeExpense()!.expense.map(c => c.amount)"
+        [incomeData]="incomeExpense().income.map(c => c.amount)"
+        [labels]="incomeExpense().labels"
+        class="flex justify-center"
+      ></app-line-chart>
     </div>
     <div class="flex-1">
       <app-pie-chart
         class="flex justify-center"
-        [expensesData]="[
-          { category: 'Food', expense: 200 },
-          { category: 'Food', expense: 200 },
-          { category: 'd', expense: 500 },
-        ]"
+        [expensesData]="incomeByCategory().map(c => ({
+          category: c.category,
+    expense: c.amount
+  }))"
       ></app-pie-chart>
     </div>
   </div>
