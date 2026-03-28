@@ -17,52 +17,55 @@
         </tr>
       </thead>
 
-      <!-- Body -->
-      <tbody>
-        @for (value of transactions()?.values; track value.id) {
-          <tr class="border-t hover:bg-gray-50">
-            <td class="px-6 py-4">15 Oct 2025</td>
+      @if (transactions() !== null) {
+        <tbody>
+          @for (value of transactions()?.values; track value.id) {
+            <tr class="border-t hover:bg-gray-50">
+              <td class="px-6 py-4">15 Oct 2025</td>
 
-            <!-- Category with icon -->
-            <td class="px-6 py-4 flex items-center gap-3">
-              <div
-                class="w-8 h-8 flex items-center justify-center rounded-full bg-teal-100 text-teal-600"
-              ></div>
-              {{ value.category }}
-            </td>
+              <!-- Category with icon -->
+              <td class="px-6 py-4 flex items-center gap-3">
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-teal-100 text-teal-600"
+                ></div>
+                {{ value.category.categoryName }}
+              </td>
 
-            <td class="px-6 py-4 break-all">
-              {{ value.description }}
-            </td>
+              <td class="px-6 py-4 break-all">
+                {{ value.description }}
+              </td>
 
-            <td class="px-6 py-4">{{ value.amount > 0 ? '+' : '' }}₼{{ Abs(value.amount) }}</td>
+              <td class="px-6 py-4">{{ value.amount > 0 ? '+' : '-' }}₼{{ Abs(value.amount) }}</td>
 
-            <!-- Type badge -->
-            <td class="px-6 py-4">
-              <span
-                class="px-3 py-1 text-xs rounded-full"
-                [class]="value.amount > 0 ? 'bg-teal-100 text-teal-600' : 'bg-red-100 text-red-600'"
-              >
-                {{ value.amount > 0 ? 'Income' : 'Expense' }}
-              </span>
-            </td>
+              <!-- Type badge -->
+              <td class="px-6 py-4">
+                <span
+                  class="px-3 py-1 text-xs rounded-full"
+                  [class]="
+                    value.amount > 0 ? 'bg-teal-100 text-teal-600' : 'bg-red-100 text-red-600'
+                  "
+                >
+                  {{ value.amount > 0 ? 'Income' : 'Expense' }}
+                </span>
+              </td>
 
-            <!-- Actions -->
-            <td class="px-6 py-4 flex justify-center gap-2">
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 text-white hover:opacity-90"
-              >
-                ✏️
-              </button>
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:opacity-90"
-              >
-                🗑️
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
+              <!-- Actions -->
+              <td class="px-6 py-4 flex justify-center gap-2">
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 text-white hover:opacity-90"
+                >
+                  ✏️
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:opacity-90"
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      }
     </table>
   </div>
 </div>

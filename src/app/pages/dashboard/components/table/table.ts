@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { TransactionResponse } from '../../../../services/transaction-service';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-table',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })

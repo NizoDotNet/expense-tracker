@@ -1,7 +1,7 @@
 <div class="bg-white rounded-xl p-6">
   <div class="flex flex-col gap-4">
     <h1 class="text-xl font-bold text-primary-title">Recent Transactions</h1>
-    <a class="text-[#2563EB] underline">View all</a>
+    <a class="text-[#2563EB] underline cursor-pointer" routerLink="/transactions">View all</a>
     <div class="w-full overflow-x-auto">
       <table class="w-full border-collapse text-left">
         <thead>
@@ -19,7 +19,7 @@
               <td class="px-6 py-4">{{ value.category.categoryName }}</td>
               <td class="px-6 py-4">{{ value.dateTime | date: 'dd MMM yyyy' }}</td>
               <td class="px-6 py-4 text-right">
-                {{ value.amount > 0 ? '+' : '' }}₼{{ Abs(value.amount) }}
+                {{ value.amount > 0 ? '+' : '-' }}₼{{ Abs(value.amount) }}
               </td>
             </tr>
           }
