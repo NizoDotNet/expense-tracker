@@ -5,6 +5,7 @@ import {
   TimePeriod,
   TransactionExpenseByCategoryResponse,
   TransactionIncomeExpenseResponse,
+  TransactionResponse,
   TransactionService,
   UserBalanceCalculatedStats,
 } from '../../services/transaction-service';
@@ -20,12 +21,23 @@ export class Dashboard implements OnInit {
   incomeExpense = signal<TransactionIncomeExpenseResponse | null>(null);
   byCategory = signal<TransactionExpenseByCategoryResponse[] | null>(null);
   timePeriod = signal<TimePeriod>(TimePeriod.month);
+  transactions = signal<TransactionResponse[]>([]);
   date = signal<string>(new Date().toUTCString());
 
   ngOnInit(): void {
     this.getBalanceStats();
     this.getIncomeExpense();
     this.getExpensesByCategory();
+    this.getLatestTransactions();
+  }
+
+  private getLatestTransactions() {
+    this.transactionService.getAllTransactions(1, 5).subscribe({
+      next: (value) => {
+        console.log(value);
+        this.transactions.set(value.values);
+      },
+    });
   }
 
   private getExpensesByCategory() {

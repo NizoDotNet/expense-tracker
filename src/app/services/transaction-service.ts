@@ -16,7 +16,7 @@ export interface CreateTransactionRequest {
 
 export interface TransactionCategoryResponse {
   id: number;
-  name: string;
+  categoryName: string;
 }
 
 export interface TransactionResponse {
@@ -65,12 +65,12 @@ export class TransactionService {
   readonly http = inject(HttpClient);
   readonly baseUrl = '/api/transactions';
 
-  getAllTransactions(page: number, pageNumber: number) {
+  getAllTransactions(page: number, pageSize: number) {
     return this.http.get<PagedResult<TransactionResponse>>(`${this.baseUrl}`, {
       withCredentials: true,
       params: {
         page,
-        pageNumber,
+        pageSize,
       },
     });
   }
