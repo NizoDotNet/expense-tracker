@@ -23,8 +23,32 @@ export class Transactions implements OnInit {
   isModalOpen = signal<boolean>(false);
   categories: TransactionCategoryResponse[] = [
     {
+      name: 'Food',
       id: 1,
-      name: 'cart',
+    },
+    {
+      name: 'Joy',
+      id: 2,
+    },
+    {
+      name: 'Electronics',
+      id: 3,
+    },
+    {
+      name: 'For Home',
+      id: 4,
+    },
+    {
+      name: 'Transport',
+      id: 5,
+    },
+    {
+      name: 'Salary',
+      id: 6,
+    },
+    {
+      name: 'Other',
+      id: 7,
     },
   ];
 
@@ -32,6 +56,10 @@ export class Transactions implements OnInit {
     this.transactionService.createTransaction(createTransaction).subscribe((c) => {
       this.closeModal();
     });
+  }
+
+  deleteTransaction(id: string) {
+    this.transactionService.deleteTransaction(id).subscribe((_) => {});
   }
   closeModal() {
     this.isModalOpen.set(false);
@@ -45,6 +73,7 @@ export class Transactions implements OnInit {
     this.page.set(value);
     this.getTransactions();
   }
+
   private getTransactions() {
     this.transactionService.getAllTransactions(this.page(), this.pageSize()).subscribe({
       next: (value) => {
