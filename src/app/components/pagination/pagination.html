@@ -10,7 +10,7 @@
   @for (p of pages; track $index) {
     <button
       (click)="goTo(p)"
-      [class.bg-blue-500]="p === page()"
+      [class.bg-primary-green]="p === page()"
       [class.text-white]="p === page()"
       class="px-3 py-1 border rounded cursor-pointer"
     >

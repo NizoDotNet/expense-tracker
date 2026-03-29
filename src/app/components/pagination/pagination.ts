@@ -15,8 +15,9 @@ export class Pagination {
 
   get pages(): number[] {
     const maxVisible = 5;
+    const totalPage = Math.ceil(this.total() / this.pageSize());
     const start = Math.max(this.page() - 2, 1);
-    const end = Math.min(start + maxVisible - 1, this.total());
+    const end = Math.min(start + maxVisible - 1, totalPage);
 
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
