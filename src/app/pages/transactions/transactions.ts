@@ -9,6 +9,8 @@ import {
 import { AddTransaction } from '../../components/modals/add-transaction/add-transaction';
 import { Pagination } from '../../components/pagination/pagination';
 import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-transactions',
   imports: [Pagination, AddTransaction, DatePipe],
@@ -17,6 +19,7 @@ import { DatePipe } from '@angular/common';
 })
 export class Transactions implements OnInit {
   readonly transactionService = inject(TransactionService);
+  readonly toastService = inject(ToastrService);
   page = signal<number>(1);
   pageSize = signal<number>(10);
 
@@ -59,7 +62,9 @@ export class Transactions implements OnInit {
   }
 
   deleteTransaction(id: string) {
-    this.transactionService.deleteTransaction(id).subscribe((_) => {});
+    this.transactionService.deleteTransaction(id).subscribe((_) => {
+      this.toastService.info('Transaction was deleted');
+    });
   }
   closeModal() {
     this.isModalOpen.set(false);
