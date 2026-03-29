@@ -12,6 +12,7 @@ export interface CreateTransactionRequest {
   desciprtion?: string | null;
   amount: number;
   transactionCategoryId: number;
+  dateTime: string;
 }
 
 export interface TransactionCategoryResponse {
@@ -127,17 +128,7 @@ export class TransactionService {
       .post(`${this.baseUrl}`, createTransactionRequest, {
         withCredentials: true,
       })
-      .pipe(
-        tap(() => {
-          this.balanceStats.update(
-            (c) =>
-              ({
-                ...c,
-                balance: c!.balance + createTransactionRequest.amount,
-              }) as UserBalanceCalculatedStats,
-          );
-        }),
-      );
+      .pipe();
   }
 
   deleteTransaction(transactionId: string) {

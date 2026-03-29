@@ -22,6 +22,7 @@ export class AddTransaction {
     amount: new FormControl(1, [Validators.required, Validators.min(1)]),
     description: new FormControl(null, [Validators.maxLength(255)]),
     transactionCategoryId: new FormControl(1, [Validators.required]),
+    dateTime: new FormControl(new Date().toDateString()),
   });
 
   submit() {
@@ -34,6 +35,7 @@ export class AddTransaction {
       amount: this.createTransactionForm.value.amount!,
       desciprtion: this.createTransactionForm.value.description,
       transactionCategoryId: this.createTransactionForm.value.transactionCategoryId!,
+      dateTime: this.createTransactionForm.value.dateTime!,
     };
 
     this.saveTrasaction.emit(createTransactionRequest);

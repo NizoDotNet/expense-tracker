@@ -29,7 +29,9 @@ export class Transactions implements OnInit {
   ];
 
   saveTransaction(createTransaction: CreateTransactionRequest) {
-    alert('cart');
+    this.transactionService.createTransaction(createTransaction).subscribe((c) => {
+      alert();
+    });
   }
   closeModal() {
     this.isModalOpen.set(false);
