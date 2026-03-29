@@ -20,6 +20,9 @@ import { ToastrService } from 'ngx-toastr';
 export class Transactions implements OnInit {
   readonly transactionService = inject(TransactionService);
   readonly toastService = inject(ToastrService);
+
+  transactions = signal<PagedResult<TransactionResponse> | null>(null);
+
   page = signal<number>(1);
   pageSize = signal<number>(10);
 
@@ -58,18 +61,57 @@ export class Transactions implements OnInit {
   saveTransaction(createTransaction: CreateTransactionRequest) {
     this.transactionService.createTransaction(createTransaction).subscribe((c) => {
       this.closeModal();
+      this.transactions.update((tr) => {
+        if (!tr) return tr;
+
+        return {
+          page: tr.page,
+          pageSize: tr.pageSize,
+          total: tr.total,
+          values: [
+            {
+              id: c as string,
+              name: createTransaction.name,
+              dateTime: createTransaction.dateTime,
+              description: createTransaction.description ?? '',
+              amount: createTransaction.amount,
+              category: {
+                id: createTransaction.transactionCategoryId,
+                name: this.categories[createTransaction.transactionCategoryId - 1].name,
+              },
+            },
+            ...tr.values,
+          ],
+        };
+      });
     });
   }
 
   deleteTransaction(id: string) {
     this.transactionService.deleteTransaction(id).subscribe((_) => {
       this.toastService.info('Transaction was deleted');
+      this.transactions.update((tr) => {
+        if (!tr) return tr;
+
+        const deletedTransaction = tr.values.find((c) => c.id === id);
+        if (!deletedTransaction) return tr;
+        const deletedTransactionId = tr.values.indexOf(deletedTransaction);
+        if (deletedTransactionId === -1) {
+          return tr;
+        }
+
+        return {
+          page: tr.page,
+          pageSize: tr.pageSize,
+          total: tr.total,
+          values: [...tr.values].splice(deletedTransactionId, 1),
+        };
+      });
     });
   }
   closeModal() {
     this.isModalOpen.set(false);
   }
-  transactions = signal<PagedResult<TransactionResponse> | null>(null);
   ngOnInit(): void {
     this.getTransactions();
   }

@@ -19,7 +19,7 @@ export class AddTransaction {
 
   createTransactionForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    amount: new FormControl(1, [Validators.required, Validators.min(1)]),
+    amount: new FormControl(1, [Validators.required]),
     description: new FormControl(null, [Validators.maxLength(255)]),
     transactionCategoryId: new FormControl(1, [Validators.required]),
     dateTime: new FormControl(new Date().toDateString()),
