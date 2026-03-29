@@ -68,4 +68,12 @@
       }
     </table>
   </div>
+  @if (transactions() !== null) {
+    <app-pagination
+      [page]="transactions()!.page"
+      [pageSize]="transactions()!.pageSize"
+      [total]="transactions()!.total"
+      (pageChange)="(changePage)"
+    ></app-pagination>
+  }
 </div>

@@ -5,9 +5,11 @@ import {
   TransactionService,
 } from '../../services/transaction-service';
 
+import { Pagination } from '../../components/pagination/pagination';
+
 @Component({
   selector: 'app-transactions',
-  imports: [],
+  imports: [Pagination],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
@@ -18,7 +20,15 @@ export class Transactions implements OnInit {
 
   transactions = signal<PagedResult<TransactionResponse> | null>(null);
   ngOnInit(): void {
-    this.transactionService.getAllTransactions(1, 10).subscribe({
+    this.getTransactions();
+  }
+
+  changePage(value: number) {
+    this.page.set(value);
+    this.getTransactions();
+  }
+  private getTransactions() {
+    this.transactionService.getAllTransactions(this.page(), this.pageSize()).subscribe({
       next: (value) => {
         this.transactions.set(value);
       },
