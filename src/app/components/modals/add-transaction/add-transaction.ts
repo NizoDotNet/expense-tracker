@@ -33,7 +33,7 @@ export class AddTransaction {
     const createTransactionRequest: CreateTransactionRequest = {
       name: this.createTransactionForm.value.name!,
       amount: this.createTransactionForm.value.amount!,
-      desciprtion: this.createTransactionForm.value.description,
+      description: this.createTransactionForm.value.description,
       transactionCategoryId: this.createTransactionForm.value.transactionCategoryId!,
       dateTime: this.createTransactionForm.value.dateTime!,
     };

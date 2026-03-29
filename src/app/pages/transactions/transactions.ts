@@ -8,10 +8,10 @@ import {
 } from '../../services/transaction-service';
 import { AddTransaction } from '../../components/modals/add-transaction/add-transaction';
 import { Pagination } from '../../components/pagination/pagination';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-transactions',
-  imports: [Pagination, AddTransaction],
+  imports: [Pagination, AddTransaction, DatePipe],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })

@@ -9,7 +9,7 @@ export enum TimePeriod {
 
 export interface CreateTransactionRequest {
   name: string;
-  desciprtion?: string | null;
+  description?: string | null;
   amount: number;
   transactionCategoryId: number;
   dateTime: string;
