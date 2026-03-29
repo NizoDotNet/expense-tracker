@@ -1,0 +1,41 @@
+import { Component, input, output, signal } from '@angular/core';
+import {
+  CreateTransactionRequest,
+  TransactionCategoryResponse,
+} from '../../../services/transaction-service';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+@Component({
+  selector: 'app-add-transaction',
+  imports: [ReactiveFormsModule],
+  templateUrl: './add-transaction.html',
+  styleUrl: './add-transaction.css',
+})
+export class AddTransaction {
+  isOpen = input.required<boolean>();
+  categories = input.required<TransactionCategoryResponse[]>();
+
+  close = output();
+  saveTrasaction = output<CreateTransactionRequest>();
+
+  createTransactionForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    amount: new FormControl(1, [Validators.required, Validators.min(1)]),
+    description: new FormControl(null, [Validators.maxLength(255)]),
+    transactionCategoryId: new FormControl(1, [Validators.required]),
+  });
+
+  submit() {
+    if (this.createTransactionForm.invalid) {
+      return;
+    }
+
+    const createTransactionRequest: CreateTransactionRequest = {
+      name: this.createTransactionForm.value.name!,
+      amount: this.createTransactionForm.value.amount!,
+      desciprtion: this.createTransactionForm.value.description,
+      transactionCategoryId: this.createTransactionForm.value.transactionCategoryId!,
+    };
+
+    this.saveTrasaction.emit(createTransactionRequest);
+  }
+}

@@ -16,7 +16,7 @@ export interface CreateTransactionRequest {
 
 export interface TransactionCategoryResponse {
   id: number;
-  categoryName: string;
+  name: string;
 }
 
 export interface TransactionResponse {
