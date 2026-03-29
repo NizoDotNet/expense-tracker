@@ -63,6 +63,7 @@ export class Transactions implements OnInit {
       this.closeModal();
       this.transactions.update((tr) => {
         if (!tr) return tr;
+        this.toastService.success('Transaction added');
 
         return {
           page: tr.page,
@@ -89,7 +90,6 @@ export class Transactions implements OnInit {
 
   deleteTransaction(id: string) {
     this.transactionService.deleteTransaction(id).subscribe((_) => {
-      this.toastService.info('Transaction was deleted');
       this.transactions.update((tr) => {
         if (!tr) return tr;
 
@@ -100,11 +100,14 @@ export class Transactions implements OnInit {
           return tr;
         }
 
+        this.toastService.warning('Transaction was deleted');
+
+        tr.values.splice(deletedTransactionId, 1);
         return {
           page: tr.page,
           pageSize: tr.pageSize,
           total: tr.total,
-          values: [...tr.values].splice(deletedTransactionId, 1),
+          values: tr.values,
         };
       });
     });
