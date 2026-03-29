@@ -59,57 +59,67 @@ export class Transactions implements OnInit {
   ];
 
   saveTransaction(createTransaction: CreateTransactionRequest) {
-    this.transactionService.createTransaction(createTransaction).subscribe((c) => {
-      this.closeModal();
-      this.transactions.update((tr) => {
-        if (!tr) return tr;
-        this.toastService.success('Transaction added');
+    this.transactionService.createTransaction(createTransaction).subscribe({
+      next: () => {
+        this.closeModal();
+        this.transactions.update((tr) => {
+          if (!tr) return tr;
+          this.toastService.success('Transaction added');
 
-        return {
-          page: tr.page,
-          pageSize: tr.pageSize,
-          total: tr.total,
-          values: [
-            {
-              id: c as string,
-              name: createTransaction.name,
-              dateTime: createTransaction.dateTime,
-              description: createTransaction.description ?? '',
-              amount: createTransaction.amount,
-              category: {
-                id: createTransaction.transactionCategoryId,
-                name: this.categories[createTransaction.transactionCategoryId - 1].name,
+          return {
+            page: tr.page,
+            pageSize: tr.pageSize,
+            total: tr.total,
+            values: [
+              {
+                id: c as string,
+                name: createTransaction.name,
+                dateTime: createTransaction.dateTime,
+                description: createTransaction.description ?? '',
+                amount: createTransaction.amount,
+                category: {
+                  id: createTransaction.transactionCategoryId,
+                  name: this.categories[createTransaction.transactionCategoryId - 1].name,
+                },
               },
-            },
-            ...tr.values,
-          ],
-        };
-      });
+              ...tr.values,
+            ],
+          };
+        });
+      },
+      error: () => {
+        this.toastService.error('Error occured');
+      },
     });
   }
 
   deleteTransaction(id: string) {
-    this.transactionService.deleteTransaction(id).subscribe((_) => {
-      this.transactions.update((tr) => {
-        if (!tr) return tr;
+    this.transactionService.deleteTransaction(id).subscribe({
+      next: () => {
+        this.transactions.update((tr) => {
+          if (!tr) return tr;
 
-        const deletedTransaction = tr.values.find((c) => c.id === id);
-        if (!deletedTransaction) return tr;
-        const deletedTransactionId = tr.values.indexOf(deletedTransaction);
-        if (deletedTransactionId === -1) {
-          return tr;
-        }
+          const deletedTransaction = tr.values.find((c) => c.id === id);
+          if (!deletedTransaction) return tr;
+          const deletedTransactionId = tr.values.indexOf(deletedTransaction);
+          if (deletedTransactionId === -1) {
+            return tr;
+          }
 
-        this.toastService.warning('Transaction was deleted');
+          this.toastService.warning('Transaction was deleted');
 
-        tr.values.splice(deletedTransactionId, 1);
-        return {
-          page: tr.page,
-          pageSize: tr.pageSize,
-          total: tr.total,
-          values: tr.values,
-        };
-      });
+          tr.values.splice(deletedTransactionId, 1);
+          return {
+            page: tr.page,
+            pageSize: tr.pageSize,
+            total: tr.total,
+            values: tr.values,
+          };
+        });
+      },
+      error: () => {
+        this.toastService.error('Error occured');
+      },
     });
   }
   closeModal() {
