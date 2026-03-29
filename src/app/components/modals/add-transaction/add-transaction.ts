@@ -38,4 +38,16 @@ export class AddTransaction {
 
     this.saveTrasaction.emit(createTransactionRequest);
   }
+
+  get name() {
+    return this.createTransactionForm.get('name');
+  }
+
+  get description() {
+    return this.createTransactionForm.get('description');
+  }
+
+  get amount() {
+    return this.createTransactionForm.get('amount');
+  }
 }

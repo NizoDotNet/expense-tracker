@@ -1,15 +1,17 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import {
+  CreateTransactionRequest,
   PagedResult,
+  TransactionCategoryResponse,
   TransactionResponse,
   TransactionService,
 } from '../../services/transaction-service';
-
+import { AddTransaction } from '../../components/modals/add-transaction/add-transaction';
 import { Pagination } from '../../components/pagination/pagination';
 
 @Component({
   selector: 'app-transactions',
-  imports: [Pagination],
+  imports: [Pagination, AddTransaction],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
@@ -18,6 +20,20 @@ export class Transactions implements OnInit {
   page = signal<number>(1);
   pageSize = signal<number>(10);
 
+  isModalOpen = signal<boolean>(false);
+  categories: TransactionCategoryResponse[] = [
+    {
+      id: 1,
+      name: 'cart',
+    },
+  ];
+
+  saveTransaction(createTransaction: CreateTransactionRequest) {
+    alert('cart');
+  }
+  closeModal() {
+    this.isModalOpen.set(false);
+  }
   transactions = signal<PagedResult<TransactionResponse> | null>(null);
   ngOnInit(): void {
     this.getTransactions();

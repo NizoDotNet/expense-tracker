@@ -1,0 +1,55 @@
+@if (isOpen()) {
+  <div class="fixed inset-0 flex items-center justify-center bg-black/30">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-[400px]">
+      <h1 class="text-xl text-primary-title mb-4">Add Transaction</h1>
+
+      <form (ngSubmit)="submit()" [formGroup]="createTransactionForm" class="flex flex-col gap-4">
+        <input class="form-input w-full" formControlName="name" placeholder="Title" />
+        @if (name?.touched && !name?.valid) {
+          <span class="text-red-500 text-sm">Name is invalid</span>
+        }
+        <textarea
+          class="form-input w-full"
+          formControlName="description"
+          placeholder="Description"
+        ></textarea>
+        @if (description?.touched && !description?.valid) {
+          <span class="text-red-500 text-sm">Description is invalid</span>
+        }
+        <select formControlName="transactionCategoryId" class="form-input w-full">
+          @for (category of categories(); track category.id) {
+            <option [value]="category.id">{{ category.name }}</option>
+          }
+        </select>
+
+        <input
+          type="number"
+          step="0.01"
+          class="form-input w-full"
+          formControlName="amount"
+          placeholder="Amount"
+        />
+        @if (amount?.touched && !amount?.valid) {
+          <span class="text-red-500 text-sm">Amount is invalid</span>
+        }
+
+        <div class="flex gap-2 justify-end">
+          <button
+            type="button"
+            (click)="close.emit()"
+            class="w-[120px] cursor-pointer rounded-lg h-10 text-primary-green border-2 border-primary-green"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="w-[120px] cursor-pointer h-10 rounded-lg bg-primary-green text-white font-semibold hover:opacity-90"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
