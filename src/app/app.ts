@@ -9,16 +9,16 @@ import { AuthService } from './services/auth-service';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
+  protected readonly title = signal('expense-tracker');
+  readonly authService = inject(AuthService);
+  readonly router = inject(Router);
   ngOnInit(): void {
     this.authService.getUser().subscribe({
       error: (err) => {
-        if (err.status === 401 || err.status === 403) {
-          this.router.navigate(['auth/login']);
+        if (err.status >= 400) {
+          this.router.navigate(['/auth/login']);
         }
       },
     });
   }
-  protected readonly title = signal('expense-tracker');
-  readonly authService = inject(AuthService);
-  readonly router = inject(Router);
 }
