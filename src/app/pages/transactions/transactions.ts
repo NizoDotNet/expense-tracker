@@ -30,7 +30,7 @@ export class Transactions implements OnInit {
 
   saveTransaction(createTransaction: CreateTransactionRequest) {
     this.transactionService.createTransaction(createTransaction).subscribe((c) => {
-      alert();
+      this.closeModal();
     });
   }
   closeModal() {
