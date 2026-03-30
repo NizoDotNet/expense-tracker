@@ -139,9 +139,9 @@ export class TransactionService {
       .pipe();
   }
 
-  updateTransaction(updateTransactionRequest: UpdateTransactionRequest) {
+  updateTransaction(id: string, updateTransactionRequest: UpdateTransactionRequest) {
     return this.http
-      .post(`${this.baseUrl}`, updateTransactionRequest, {
+      .patch(`${this.baseUrl}/${id}`, updateTransactionRequest, {
         withCredentials: true,
       })
       .pipe();

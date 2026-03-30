@@ -5,6 +5,7 @@ import {
   TransactionCategoryResponse,
   TransactionResponse,
   TransactionService,
+  UpdateTransactionRequest,
 } from '../../services/transaction-service';
 import { AddTransaction } from '../../components/modals/add-transaction/add-transaction';
 import { Pagination } from '../../components/pagination/pagination';
@@ -119,6 +120,17 @@ export class Transactions implements OnInit {
       },
       error: () => {
         this.toastService.error('Error occured');
+      },
+    });
+  }
+
+  updateTransaction(id: string, updTransaction: UpdateTransactionRequest) {
+    this.transactionService.updateTransaction(id, updTransaction).subscribe({
+      next: () => {
+        this.toastService.info('Transaction was updated');
+      },
+      error: () => {
+        this.toastService.error('Error occured while update');
       },
     });
   }

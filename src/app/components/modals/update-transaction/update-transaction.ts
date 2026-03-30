@@ -19,7 +19,7 @@ export class UpdateTransaction implements OnInit {
 
   close = output();
 
-  updateTransaction = output<UpdateTransactionRequest>();
+  updateTransaction = output<{ id: string; updTransaction: UpdateTransactionRequest }>();
 
   updateTransactionForm: FormGroup = new FormGroup({});
 
@@ -38,7 +38,7 @@ export class UpdateTransaction implements OnInit {
       return;
     }
 
-    const createTransactionRequest: UpdateTransactionRequest = {
+    const updateTransactionRequest: UpdateTransactionRequest = {
       name: this.updateTransactionForm.value.name!,
       amount: this.updateTransactionForm.value.amount!,
       description: this.updateTransactionForm.value.description,
@@ -46,7 +46,10 @@ export class UpdateTransaction implements OnInit {
       dateTime: this.updateTransactionForm.value.dateTime!,
     };
 
-    this.updateTransaction.emit(createTransactionRequest);
+    this.updateTransaction.emit({
+      id: this.transaction().id,
+      updTransaction: updateTransactionRequest,
+    });
   }
 
   get name() {
