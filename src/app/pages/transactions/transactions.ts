@@ -128,6 +128,24 @@ export class Transactions implements OnInit {
   updateTransaction(event: { id: string; updTransaction: UpdateTransactionRequest }) {
     this.transactionService.updateTransaction(event.id, event.updTransaction).subscribe({
       next: () => {
+        if (!this.transactions()) return;
+
+        const updateTransaction = this.transactions()!.values.find((c) => c.id === event.id);
+        if (!updateTransaction) return;
+        const updateTransactionIndex = this.transactions()!.values.indexOf(updateTransaction);
+        if (updateTransactionIndex === -1) {
+          return;
+        }
+
+        this.transactions()!.values[updateTransactionIndex].amount = event.updTransaction.amount;
+        this.transactions()!.values[updateTransactionIndex].name = event.updTransaction.name;
+        this.transactions()!.values[updateTransactionIndex].description =
+          event.updTransaction.description ?? '';
+        this.transactions()!.values[updateTransactionIndex].category.id =
+          event.updTransaction.transactionCategoryId;
+        this.transactions()!.values[updateTransactionIndex].category.name =
+          this.categories[event.updTransaction.transactionCategoryId - 1].name;
+
         this.toastService.info('Transaction was updated');
       },
       error: () => {
