@@ -1,14 +1,15 @@
 <div class="flex flex-col gap-6">
   <app-add-transaction
-    [isOpen]="isModalOpen()"
+    [isOpen]="isAddTransactionModelOpen()"
     [categories]="categories"
     (close)="closeModal()"
     (saveTrasaction)="saveTransaction($event)"
   ></app-add-transaction>
+
   <div class="py-3 flex justify-between">
     <h1 class="text-2xl text-primary-title font-bold">Transactions</h1>
     <button
-      (click)="isModalOpen.set(true)"
+      (click)="isAddTransactionModelOpen.set(true)"
       class="w-[240px] h-10 rounded-lg bg-primary-green text-white font-semibold hover:opacity-90 text-[16px]"
     >
       Add transaction
@@ -21,6 +22,8 @@
       <thead>
         <tr class="bg-gray-100 text-gray-600 text-left">
           <th class="px-6 py-3">Date</th>
+          <th class="px-6 py-3">Name</th>
+
           <th class="px-6 py-3">Category</th>
           <th class="px-6 py-3">Description</th>
           <th class="px-6 py-3">Amount</th>
@@ -32,8 +35,16 @@
       @if (transactions() !== null) {
         <tbody>
           @for (value of transactions()?.values; track value.id) {
+            <app-update-transaction
+              [isOpen]="isUpdateTransactionModalOpen()"
+              [categories]="categories"
+              (close)="isUpdateTransactionModalOpen.set(false)"
+              [transaction]="value"
+              (updateTransaction)="updateTransaction($event)"
+            ></app-update-transaction>
             <tr class="border-t hover:bg-gray-50">
               <td class="px-6 py-4">{{ value.dateTime | date: 'dd MMM yyyy' }}</td>
+              <td class="px-6 py-4">{{ value.name }}</td>
 
               <!-- Category with icon -->
               <td class="px-6 py-4 flex items-center gap-3">
@@ -64,6 +75,7 @@
               <!-- Actions -->
               <td class="px-6 py-4 flex justify-center gap-2">
                 <button
+                  (click)="isUpdateTransactionModalOpen.set(true)"
                   class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 text-white hover:opacity-90"
                 >
                   ✏️

@@ -25,11 +25,14 @@ export class UpdateTransaction implements OnInit {
 
   ngOnInit(): void {
     this.updateTransactionForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      amount: new FormControl(1, [Validators.required]),
-      description: new FormControl(null, [Validators.maxLength(255)]),
-      transactionCategoryId: new FormControl(1, [Validators.required]),
-      dateTime: new FormControl(new Date().toDateString()),
+      name: new FormControl(this.transaction().name, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      amount: new FormControl(this.transaction().amount, [Validators.required]),
+      description: new FormControl(this.transaction().description, [Validators.maxLength(255)]),
+      transactionCategoryId: new FormControl(this.transaction().category.id, [Validators.required]),
+      dateTime: new FormControl(new Date(this.transaction().dateTime)),
     });
   }
 

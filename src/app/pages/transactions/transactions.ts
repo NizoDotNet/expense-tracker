@@ -11,10 +11,10 @@ import { AddTransaction } from '../../components/modals/add-transaction/add-tran
 import { Pagination } from '../../components/pagination/pagination';
 import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-
+import { UpdateTransaction } from '../../components/modals/update-transaction/update-transaction';
 @Component({
   selector: 'app-transactions',
-  imports: [Pagination, AddTransaction, DatePipe],
+  imports: [Pagination, AddTransaction, UpdateTransaction, DatePipe],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
 })
@@ -27,7 +27,8 @@ export class Transactions implements OnInit {
   page = signal<number>(1);
   pageSize = signal<number>(10);
 
-  isModalOpen = signal<boolean>(false);
+  isAddTransactionModelOpen = signal<boolean>(false);
+  isUpdateTransactionModalOpen = signal<boolean>(false);
   categories: TransactionCategoryResponse[] = [
     {
       name: 'Food',
@@ -124,8 +125,8 @@ export class Transactions implements OnInit {
     });
   }
 
-  updateTransaction(id: string, updTransaction: UpdateTransactionRequest) {
-    this.transactionService.updateTransaction(id, updTransaction).subscribe({
+  updateTransaction(event: { id: string; updTransaction: UpdateTransactionRequest }) {
+    this.transactionService.updateTransaction(event.id, event.updTransaction).subscribe({
       next: () => {
         this.toastService.info('Transaction was updated');
       },
@@ -135,7 +136,7 @@ export class Transactions implements OnInit {
     });
   }
   closeModal() {
-    this.isModalOpen.set(false);
+    this.isAddTransactionModelOpen.set(false);
   }
   ngOnInit(): void {
     this.getTransactions();
