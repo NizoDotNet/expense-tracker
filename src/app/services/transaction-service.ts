@@ -15,6 +15,14 @@ export interface CreateTransactionRequest {
   dateTime: string;
 }
 
+export interface UpdateTransactionRequest {
+  name: string;
+  description?: string | null;
+  amount: number;
+  transactionCategoryId: number;
+  dateTime: string;
+}
+
 export interface TransactionCategoryResponse {
   id: number;
   name: string;
@@ -126,6 +134,14 @@ export class TransactionService {
   createTransaction(createTransactionRequest: CreateTransactionRequest) {
     return this.http
       .post(`${this.baseUrl}`, createTransactionRequest, {
+        withCredentials: true,
+      })
+      .pipe();
+  }
+
+  updateTransaction(updateTransactionRequest: UpdateTransactionRequest) {
+    return this.http
+      .post(`${this.baseUrl}`, updateTransactionRequest, {
         withCredentials: true,
       })
       .pipe();

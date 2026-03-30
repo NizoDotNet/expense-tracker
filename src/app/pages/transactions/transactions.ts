@@ -60,7 +60,7 @@ export class Transactions implements OnInit {
 
   saveTransaction(createTransaction: CreateTransactionRequest) {
     this.transactionService.createTransaction(createTransaction).subscribe({
-      next: () => {
+      next: (res) => {
         this.closeModal();
         this.transactions.update((tr) => {
           if (!tr) return tr;
@@ -72,7 +72,7 @@ export class Transactions implements OnInit {
             total: tr.total,
             values: [
               {
-                id: c as string,
+                id: res as string,
                 name: createTransaction.name,
                 dateTime: createTransaction.dateTime,
                 description: createTransaction.description ?? '',
