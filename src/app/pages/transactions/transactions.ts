@@ -28,7 +28,7 @@ export class Transactions implements OnInit {
   pageSize = signal<number>(10);
 
   isAddTransactionModelOpen = signal<boolean>(false);
-  isUpdateTransactionModalOpen = signal<boolean>(false);
+  selectedTransactionId = signal<string | null>(null);
   categories: TransactionCategoryResponse[] = [
     {
       name: 'Food',

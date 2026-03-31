@@ -36,9 +36,9 @@
         <tbody>
           @for (value of transactions()?.values; track value.id) {
             <app-update-transaction
-              [isOpen]="isUpdateTransactionModalOpen()"
+              [isOpen]="selectedTransactionId() === value.id"
               [categories]="categories"
-              (close)="isUpdateTransactionModalOpen.set(false)"
+              (close)="selectedTransactionId.set(null)"
               [transaction]="value"
               (updateTransaction)="updateTransaction($event)"
             ></app-update-transaction>
@@ -75,7 +75,7 @@
               <!-- Actions -->
               <td class="px-6 py-4 flex justify-center gap-2">
                 <button
-                  (click)="isUpdateTransactionModalOpen.set(true)"
+                  (click)="selectedTransactionId.set(value.id)"
                   class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-400 text-white hover:opacity-90"
                 >
                   ✏️
