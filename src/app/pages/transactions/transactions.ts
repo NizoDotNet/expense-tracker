@@ -137,14 +137,27 @@ export class Transactions implements OnInit {
           return;
         }
 
-        this.transactions()!.values[updateTransactionIndex].amount = event.updTransaction.amount;
-        this.transactions()!.values[updateTransactionIndex].name = event.updTransaction.name;
-        this.transactions()!.values[updateTransactionIndex].description =
-          event.updTransaction.description ?? '';
-        this.transactions()!.values[updateTransactionIndex].category.id =
-          event.updTransaction.transactionCategoryId;
-        this.transactions()!.values[updateTransactionIndex].category.name =
-          this.categories[event.updTransaction.transactionCategoryId - 1].name;
+        this.transactions.update((current) => {
+          if (!current) return current;
+
+          return {
+            ...current,
+            values: current.values.map((tr) =>
+              tr.id === event.id
+                ? {
+                    ...tr,
+                    amount: event.updTransaction.amount,
+                    name: event.updTransaction.name,
+                    description: event.updTransaction.description ?? '',
+                    category: {
+                      id: event.updTransaction.transactionCategoryId,
+                      name: this.categories[event.updTransaction.transactionCategoryId - 1].name,
+                    },
+                  }
+                : tr,
+            ),
+          };
+        });
 
         this.toastService.info('Transaction was updated');
       },

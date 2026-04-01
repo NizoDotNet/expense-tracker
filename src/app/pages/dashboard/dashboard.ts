@@ -34,7 +34,6 @@ export class Dashboard implements OnInit {
   private getLatestTransactions() {
     this.transactionService.getAllTransactions(1, 5).subscribe({
       next: (value) => {
-        console.log(value);
         this.transactions.set(value.values);
       },
     });
@@ -59,7 +58,6 @@ export class Dashboard implements OnInit {
   private getBalanceStats() {
     this.transactionService.getUserBalanceStats().subscribe({
       next: (userBalance) => {
-        console.log(userBalance);
         this.cards.set([
           {
             topText: 'Total Balance',
