@@ -1,1 +1,18 @@
-<p>financial-overview works!</p>
+<div class="flex flex-col">
+  <h1 class="text-xl text-primary-title font-bold">Financial Overview</h1>
+  <div class="flex flex-wrap">
+    <app-line-chart
+      [expenseData]="incomeExpense()!.expense.map(c => c.amount)"
+      [incomeData]="incomeExpense().income.map(c => c.amount)"
+      [labels]="incomeExpense().labels"
+      class="flex justify-center"
+    ></app-line-chart>
+    <app-pie-chart
+      class="flex justify-center"
+      [expensesData]="incomeByCategory().map(c => ({
+          category: c.category,
+    expense: c.amount
+  }))"
+    ></app-pie-chart>
+  </div>
+</div>
