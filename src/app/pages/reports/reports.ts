@@ -6,10 +6,11 @@ import {
   TransactionResponse,
   TransactionService,
 } from '../../services/transaction-service';
+import { FinancialOverview } from './components/financial-overview/financial-overview';
 
 @Component({
   selector: 'app-reports',
-  imports: [],
+  imports: [FinancialOverview],
   templateUrl: './reports.html',
   styleUrl: './reports.css',
 })

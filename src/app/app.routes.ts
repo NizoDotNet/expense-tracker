@@ -12,6 +12,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/dashboard/dashboard').then((c) => c.Dashboard),
   },
   {
+    path: 'reports',
+    loadComponent: () => import('./pages/reports/reports').then((c) => c.Reports),
+  },
+  {
     path: 'auth',
     children: [
       {

@@ -1,1 +1,9 @@
-<p>reports works!</p>
+<div class="flex flex-col gap-6">
+  <h1 class="text-2xl text-primary-title font-bold">Transactions</h1>
+  @if (byCategory() !== null && incomeExpense() !== null) {
+    <app-financial-overview
+      [incomeByCategory]="byCategory()!"
+      [incomeExpense]="incomeExpense()!"
+    ></app-financial-overview>
+  }
+</div>
