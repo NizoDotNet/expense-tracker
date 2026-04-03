@@ -14,5 +14,6 @@ import { PieChart } from '../../../../components/charts/pie-chart/pie-chart';
 })
 export class FinancialOverview {
   incomeExpense = input.required<TransactionIncomeExpenseResponse>();
-  incomeByCategory = input.required<TransactionExpenseByCategoryResponse[]>();
+  expenseByCategory = input.required<TransactionExpenseByCategoryResponse[]>();
+  expenseTopByCategory = input.required<TransactionExpenseByCategoryResponse[]>();
 }

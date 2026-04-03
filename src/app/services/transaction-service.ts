@@ -94,6 +94,17 @@ export class TransactionService {
     });
   }
 
+  getTopByCategory(top: number, timePeriod: TimePeriod, date: string) {
+    return this.http.get<TransactionExpenseByCategoryResponse[]>(`${this.baseUrl}/by-category`, {
+      withCredentials: true,
+      params: {
+        top,
+        timePeriod,
+        date,
+      },
+    });
+  }
+
   getIncomeExpense(timePeriod: TimePeriod, dateTime: string) {
     return this.http.get<TransactionIncomeExpenseResponse>(`${this.baseUrl}/income-expense`, {
       withCredentials: true,

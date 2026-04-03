@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { CategoryExpenseChartData } from '../pie-chart/pie-chart';
 @Component({
   selector: 'app-bar-chart',
   imports: [BaseChartDirective],
   templateUrl: './bar-chart.html',
   styleUrl: './bar-chart.css',
 })
-export class BarChart {
+export class BarChart implements OnInit {
+  barChartData = signal<ChartData<'bar'> | null>(null);
+
+  ngOnInit(): void {
+    this.barChartData.set({
+      labels: this.expensesData().map((c) => c.category),
+      datasets: [{ data: this.expensesData().map((c) => c.expense), label: 'Test' }],
+    });
+  }
+  expensesData = input<CategoryExpenseChartData[]>([]);
+
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     scales: {
       x: {},
@@ -20,14 +31,5 @@ export class BarChart {
         display: true,
       },
     },
-  };
-  public barChartType = 'bar' as const;
-
-  public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-    datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-    ],
   };
 }

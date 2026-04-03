@@ -14,14 +14,19 @@
     <div class="flex-1">
       <app-pie-chart
         class="flex justify-center"
-        [expensesData]="incomeByCategory().map(c => ({
+        [expensesData]="expenseTopByCategory().map(c => ({
           category: c.category,
     expense: c.amount
   }))"
       ></app-pie-chart>
     </div>
     <div class="flex-1">
-      <app-bar-chart></app-bar-chart>
+      <app-bar-chart
+        [expensesData]="expenseByCategory().map(c => ({
+        category: c.category,
+        expense: c.amount
+      }))"
+      ></app-bar-chart>
     </div>
   </div>
 </div>

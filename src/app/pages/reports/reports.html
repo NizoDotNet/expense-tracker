@@ -1,9 +1,10 @@
 <div class="flex flex-col gap-6">
   <h1 class="text-2xl text-primary-title font-bold">Transactions</h1>
-  @if (byCategory() !== null && incomeExpense() !== null) {
+  @if (byCategory() !== null && incomeExpense() !== null && topExpenseByCategory() !== null) {
     <app-financial-overview
-      [incomeByCategory]="byCategory()!"
+      [expenseByCategory]="byCategory()!"
       [incomeExpense]="incomeExpense()!"
+      [expenseTopByCategory]="topExpenseByCategory()!"
     ></app-financial-overview>
   }
 </div>

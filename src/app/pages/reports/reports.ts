@@ -18,6 +18,7 @@ export class Reports implements OnInit {
   transactionService = inject(TransactionService);
   incomeExpense = signal<TransactionIncomeExpenseResponse | null>(null);
   byCategory = signal<TransactionExpenseByCategoryResponse[] | null>(null);
+  topExpenseByCategory = signal<TransactionExpenseByCategoryResponse[] | null>(null);
   timePeriod = signal<TimePeriod>(TimePeriod.month);
   transactions = signal<TransactionResponse[]>([]);
   date = signal<string>(new Date().toUTCString());
@@ -25,6 +26,7 @@ export class Reports implements OnInit {
   ngOnInit(): void {
     this.getIncomeExpense();
     this.getExpensesByCategory();
+    this.getTopExpensesByCategory();
   }
 
   private getExpensesByCategory() {
@@ -34,7 +36,13 @@ export class Reports implements OnInit {
       },
     });
   }
-
+  private getTopExpensesByCategory() {
+    this.transactionService.getTopByCategory(5, this.timePeriod(), this.date()).subscribe({
+      next: (value) => {
+        this.topExpenseByCategory.set(value);
+      },
+    });
+  }
   private getIncomeExpense() {
     this.transactionService.getIncomeExpense(this.timePeriod(), this.date()).subscribe({
       next: (value) => {

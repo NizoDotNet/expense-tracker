@@ -9,7 +9,7 @@ import { BaseChartDirective } from 'ng2-charts';
   styleUrl: './pie-chart.css',
 })
 export class PieChart implements OnInit {
-  expensesData = input<PieData[]>([]);
+  expensesData = input<CategoryExpenseChartData[]>([]);
   public pieChartOptions: ChartConfiguration['options'] = {
     plugins: {
       legend: {
@@ -49,7 +49,7 @@ export class PieChart implements OnInit {
   }
 }
 
-export interface PieData {
+export interface CategoryExpenseChartData {
   category: string;
   expense: number;
 }
