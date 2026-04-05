@@ -10,14 +10,27 @@ import { CategoryExpenseChartData } from '../pie-chart/pie-chart';
 })
 export class BarChart implements OnInit {
   barChartData = signal<ChartData<'bar'> | null>(null);
+  expensesData = input.required<CategoryExpenseChartData[]>();
 
   ngOnInit(): void {
+    console.log(this.expensesData());
     this.barChartData.set({
       labels: this.expensesData().map((c) => c.category),
-      datasets: [{ data: this.expensesData().map((c) => c.expense), label: 'Test' }],
+      datasets: [
+        {
+          data: this.expensesData().map((c) => c.expense),
+          label: 'Test',
+          backgroundColor: this.generateColors(this.expensesData().length),
+        },
+      ],
     });
+
+    console.log;
   }
-  expensesData = input<CategoryExpenseChartData[]>([]);
+
+  generateColors(count: number): string[] {
+    return Array.from({ length: count }, () => `hsl(${Math.random() * 360}, 70%, 60%)`);
+  }
 
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     scales: {
@@ -28,7 +41,7 @@ export class BarChart implements OnInit {
     },
     plugins: {
       legend: {
-        display: true,
+        display: false,
       },
     },
   };
