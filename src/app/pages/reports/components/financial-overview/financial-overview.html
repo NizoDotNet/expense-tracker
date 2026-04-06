@@ -22,6 +22,7 @@
     </div>
     <div class="flex-1">
       <app-bar-chart
+        class="flex justify-center"
         [expensesData]="expenseByCategory().map(c => ({
         category: c.category,
         expense: c.amount
