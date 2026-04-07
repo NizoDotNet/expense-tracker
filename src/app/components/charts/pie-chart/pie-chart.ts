@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, effect, input, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 @Component({
@@ -8,7 +8,7 @@ import { BaseChartDirective } from 'ng2-charts';
   templateUrl: './pie-chart.html',
   styleUrl: './pie-chart.css',
 })
-export class PieChart implements OnInit {
+export class PieChart {
   expensesData = input<CategoryExpenseChartData[]>([]);
   public pieChartOptions: ChartConfiguration['options'] = {
     plugins: {
@@ -28,15 +28,18 @@ export class PieChart implements OnInit {
     maintainAspectRatio: false,
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> | undefined = undefined;
-  ngOnInit(): void {
-    this.pieChartData = {
-      labels: this.expensesData().map((c) => c.category),
-      datasets: [
-        {
-          data: this.expensesData().map((c) => c.expense),
-        },
-      ],
-    };
+
+  constructor() {
+    effect(() => {
+      this.pieChartData = {
+        labels: this.expensesData().map((c) => c.category),
+        datasets: [
+          {
+            data: this.expensesData().map((c) => c.expense),
+          },
+        ],
+      };
+    });
   }
 
   getLegendItems() {

@@ -7,8 +7,9 @@ import {
   TransactionIncomeExpenseResponse,
   TransactionResponse,
   TransactionService,
-  UserBalanceCalculatedStats,
 } from '../../services/transaction-service';
+
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   imports: [Cards, SpendingOverview],
@@ -20,7 +21,7 @@ export class Dashboard implements OnInit {
   cards = signal<Card[]>([]);
   incomeExpense = signal<TransactionIncomeExpenseResponse | null>(null);
   byCategory = signal<TransactionExpenseByCategoryResponse[] | null>(null);
-  timePeriod = signal<TimePeriod>(TimePeriod.month);
+  timePeriod = signal<TimePeriod>(TimePeriod.day);
   transactions = signal<TransactionResponse[]>([]);
   date = signal<string>(new Date().toUTCString());
 
@@ -29,6 +30,14 @@ export class Dashboard implements OnInit {
     this.getIncomeExpense();
     this.getExpensesByCategory();
     this.getLatestTransactions();
+  }
+
+  changeTimePeriod($event: Event) {
+    const ev = $event.target as HTMLInputElement;
+    this.timePeriod.set(+ev.value as TimePeriod);
+    console.log(this.timePeriod());
+    this.getIncomeExpense();
+    this.getExpensesByCategory();
   }
 
   private getLatestTransactions() {
